@@ -1,58 +1,74 @@
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-public class DBconn {
-    private  Connection conn;
-    private  Statement stmt; 
-    DBconn(){
-          try {
-             conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test?user=root&password=123");
-        } catch (SQLException ex) {
+
+public class DBconn
+{
+    private Connection con;
+    
+    public DBconn()
+    {
+        try
+        {
+            con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test?user=root&password=123");       
+        }
+        catch (SQLException ex)
+        {
             Logger.getLogger(DBconn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void getDBTable(){
+    public void getDBTable()
+    {
         String query = "SELECT * FROM Users";
-        try {
-            stmt = conn.createStatement();
+        try
+        {
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
+            while (rs.next())
+            {
                 String un = rs.getString("Username");
                 String pw = rs.getString("Passwd");
-                System.out.println("UserName: "+un+" Password: "+pw);
+                System.out.println("UserName: " + un + " Password: " + pw);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             Logger.getLogger(DBconn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public User getUser(String un,String pw) throws UserNotFoundException{
+    public User getUser(String un,String pw) throws UserNotFoundException
+    {
         User u = new User();
-        String query = "SELECT Username\n" +
-                        "FROM users\n" +
-                        "WHERE Username = "+un+" AND Passwd = "+pw ;
-        try {
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            /*
-            while(rs.next()){
-                if(rs.getString("Username") == un && rs.getString("Passwd") == pw){
+        try
+        {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT Username FROM users WHERE Username = " + un + " AND Passwd = " + pw);
+            
+            /*while (rs.next())
+            {
+                if (rs.getString("Username") == un && rs.getString("Passwd") == pw)
+                {
                     un = rs.getString("Username");
                     pw = rs.getString("Passwd");
                     u.setUn(un);
                     u.setPasswd(pw.toCharArray());
                     return u;
-                }else{
+                }
+                else
+                {
                     throw new UserNotFoundException("User Not Found in DB");
                 }
-                
+            }*/
+            
+            if (rs.next())
+            {
+                u.setUserName(rs.getString("Username"));
             }
-            */
-            if(rs.next()){
-                u.setUn(rs.getString("Username"));
-            }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             Logger.getLogger(DBconn.class.getName()).log(Level.SEVERE, null, ex);
         }
         

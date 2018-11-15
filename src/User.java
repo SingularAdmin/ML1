@@ -1,51 +1,46 @@
-
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
  * @author DL
  */
-public class User {
-    private String un;
-    private char[] passwd;
-    private boolean admin;
+public class User
+{
+    private String _userName;
+    private char[] _passWord;
+    private boolean _admin;
 
-    public User(){}
-    public User(String un, char[] passwd,boolean admin) {
-        this.un = un;
-        this.passwd = passwd;
-        this.admin = admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public boolean isAdmin() {
-        return admin;
+    public User()
+    {
     }
     
-    public String getUn() {
-        return un;
+    public User(String userName, char[] passWord)
+    {
+        _userName = userName;
+        _passWord = passWord;
+        if (_userName.equalsIgnoreCase("admin"))
+            _admin = true;
     }
 
-    public char[] getPasswd() {
-        return passwd;
-    }
-
-    public void setUn(String un) {
-        this.un = un;
-    }
-
-    public void setPasswd(char[] passwd) {
-        this.passwd = passwd;
+    public boolean isAdmin()
+    {
+        return _admin;
     }
     
-    
+    public String getUserName()
+    {
+        return _userName;
+    }
+
+    public void setUserName(String userName)
+    {
+        _userName = userName;
+    }
+
+    public char[] getPassWord()
+    {
+        return _passWord;
+    }
+
+    public void setPassWord(char[] passWord)
+    {
+        _passWord = passWord;
+    }
 }
