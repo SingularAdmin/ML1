@@ -4,24 +4,19 @@
 public class User
 {
     private String _userName;
-    private char[] _passWord;
-    private boolean _admin;
+    private String _passWord;
+    private boolean _admin = false;
 
     public User()
     {
     }
     
-    public User(String userName, char[] passWord)
+    public User(String userName, String passWord)
     {
         _userName = userName;
         _passWord = passWord;
         if (_userName.equalsIgnoreCase("admin"))
             _admin = true;
-    }
-
-    public boolean isAdmin()
-    {
-        return _admin;
     }
     
     public String getUserName()
@@ -34,13 +29,18 @@ public class User
         _userName = userName;
     }
 
-    public char[] getPassWord()
+    public String getPassWord()
     {
         return _passWord;
     }
 
-    public void setPassWord(char[] passWord)
+    public void setPassWord(String passWord)
     {
         _passWord = passWord;
+    }
+
+    public boolean isAdmin()
+    {
+        return _admin;
     }
 }

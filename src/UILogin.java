@@ -1,4 +1,5 @@
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 public class UILogin extends javax.swing.JFrame
 {
@@ -17,8 +18,8 @@ public class UILogin extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        UserNameField = new javax.swing.JTextField();
-        PasswdField = new javax.swing.JPasswordField();
+        userNameField = new javax.swing.JTextField();
+        passWordField = new javax.swing.JPasswordField();
         passWordLabel = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
@@ -29,20 +30,8 @@ public class UILogin extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        UserNameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserNameFieldActionPerformed(evt);
-            }
-        });
-        getContentPane().add(UserNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 170, -1));
-
-        PasswdField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PasswdFieldActionPerformed(evt);
-            }
-        });
-        getContentPane().add(PasswdField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 170, -1));
+        getContentPane().add(userNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 170, -1));
+        getContentPane().add(passWordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 170, -1));
 
         passWordLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         passWordLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -82,9 +71,9 @@ public class UILogin extends javax.swing.JFrame
         informationText.setForeground(new java.awt.Color(0, 255, 0));
         informationText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         informationText.setText("Εισάγετε τα στοιχεία σας");
-        getContentPane().add(informationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 200, 20));
+        getContentPane().add(informationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 340, 20));
 
-        backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image.jpg"))); // NOI18N
+        backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/LoginBackground.jpg"))); // NOI18N
         backgroundImage.setMaximumSize(new java.awt.Dimension(300, 30));
         getContentPane().add(backgroundImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 250));
 
@@ -101,37 +90,30 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        try 
+        if (userNameField.getText().isEmpty())
         {
-            cLogin cl = new cLogin();
-            cl.createU();
-            try
-            {
-                User u = cl.login(UserNameField.getText(), PasswdField.getPassword());
-                informationText.setText(u.getUserName());
-            }
-            catch (UserNotFoundException ex)
-            {
-                //Logger.getLogger(UILogin.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println(ex.toString());
-                informationText.setForeground(Color.red);
-                informationText.setText(ex.getMessage());
-            }
+            JOptionPane.showMessageDialog(null, "Το όνομα χρήστη δε μπορεί να είναι κενό.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
-        catch (NullPointerException e)
+        if (passWordField.getPassword().length == 0)
         {
-            System.out.println("null pointer error: ");
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ο κωδικός δε μπορεί να είναι κενός.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        UserManager cl = new UserManager();
+        try
+        {
+            User u = cl.login(userNameField.getText(), String.valueOf(passWordField.getPassword()));
+            informationText.setForeground(Color.green);
+            informationText.setText(u.getUserName());
+        }
+        catch (UserNotFoundException ex)
+        {
+            informationText.setForeground(Color.red);
+            informationText.setText(ex.getMessage());
         }
     }//GEN-LAST:event_loginButtonActionPerformed
-
-    private void UserNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UserNameFieldActionPerformed
-
-    private void PasswdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswdFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PasswdFieldActionPerformed
 
     public static void main(String args[]) 
     {
@@ -146,14 +128,14 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField PasswdField;
-    private javax.swing.JTextField UserNameField;
     private javax.swing.JLabel backgroundImage;
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel informationText;
     private javax.swing.JButton loginButton;
+    private javax.swing.JPasswordField passWordField;
     private javax.swing.JLabel passWordLabel;
     private javax.swing.JButton registerButton;
+    private javax.swing.JTextField userNameField;
     private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables
 }
