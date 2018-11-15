@@ -1,7 +1,7 @@
 /**
  * @author DL
  */
-public class UserNotFoundException extends Exception
+public class IncorrectUserException extends Exception
 {
     /**
      * Constructs an instance of <code>UserNotFound</code> with the specified
@@ -9,7 +9,7 @@ public class UserNotFoundException extends Exception
      *
      * @param msg the detail message.
      */
-    public UserNotFoundException(String msg)
+    public IncorrectUserException(String msg)
     {
         super(msg);
     }

@@ -18,9 +18,11 @@ public class UserManager
     public UserManager()
     {
         _users = new ArrayList<User>();
+        Connection con = null;
+        
         try
         {
-            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test?user=root&password=123");     
+            con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test?user=root&password=123");     
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Users");
             
@@ -33,9 +35,20 @@ public class UserManager
         {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally
+        {
+            // Close the connection with the database.
+            try
+            {
+                con.close(); 
+            }
+            catch (Exception e)
+            {
+            }
+        }
     }
     
-   public User login(String userName, String passWord) throws UserNotFoundException
+   public User login(String userName, String passWord) throws IncorrectUserException
    {
        for (User user : _users)
        {
@@ -43,6 +56,6 @@ public class UserManager
                return user;
        }
        
-       throw new UserNotFoundException("Τα στοιχεία που εισάγατε δεν είναι σωστά");
+       throw new IncorrectUserException("Τα στοιχεία που εισάγατε δεν είναι σωστά");
    }
 }

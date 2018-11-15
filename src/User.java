@@ -7,10 +7,6 @@ public class User
     private String _passWord;
     private boolean _admin = false;
 
-    public User()
-    {
-    }
-    
     public User(String userName, String passWord)
     {
         _userName = userName;

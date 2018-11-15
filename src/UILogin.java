@@ -30,18 +30,18 @@ public class UILogin extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(userNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 170, -1));
-        getContentPane().add(passWordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 170, -1));
+        getContentPane().add(userNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 170, -1));
+        getContentPane().add(passWordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 170, -1));
 
         passWordLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         passWordLabel.setForeground(new java.awt.Color(255, 255, 255));
         passWordLabel.setText("Κωδικός:");
-        getContentPane().add(passWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 90, -1));
+        getContentPane().add(passWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 90, -1));
 
         userNameLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         userNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         userNameLabel.setText("Όνομα Χρήστη:");
-        getContentPane().add(userNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        getContentPane().add(userNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         loginButton.setText("Είσοδος");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +71,7 @@ public class UILogin extends javax.swing.JFrame
         informationText.setForeground(new java.awt.Color(0, 255, 0));
         informationText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         informationText.setText("Εισάγετε τα στοιχεία σας");
-        getContentPane().add(informationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 340, 20));
+        getContentPane().add(informationText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 340, 20));
 
         backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/LoginBackground.jpg"))); // NOI18N
         backgroundImage.setMaximumSize(new java.awt.Dimension(300, 30));
@@ -101,17 +101,17 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
             return;
         }
         
-        UserManager cl = new UserManager();
+        UserManager um = new UserManager();
         try
         {
-            User u = cl.login(userNameField.getText(), String.valueOf(passWordField.getPassword()));
+            User u = um.login(userNameField.getText(), String.valueOf(passWordField.getPassword()));
             informationText.setForeground(Color.green);
             informationText.setText(u.getUserName());
         }
-        catch (UserNotFoundException ex)
+        catch (IncorrectUserException e)
         {
             informationText.setForeground(Color.red);
-            informationText.setText(ex.getMessage());
+            informationText.setText(e.getMessage());
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
