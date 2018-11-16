@@ -1,3 +1,5 @@
+package user;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -40,7 +42,8 @@ public class UserManager
             // Close the connection with the database.
             try
             {
-                con.close(); 
+                if (con != null)
+                    con.close(); 
             }
             catch (Exception e)
             {
