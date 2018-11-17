@@ -1,12 +1,12 @@
 package user;
 
 /**
- * @author DL
+ * @author DL, Fakou
  */
 public class User
 {
-    private String _userName;
-    private String _passWord;
+    private final String _userName;
+    private final String _passWord;
     private boolean _admin = false;
 
     public User(String userName, String passWord)
@@ -22,19 +22,9 @@ public class User
         return _userName;
     }
 
-    public void setUserName(String userName)
-    {
-        _userName = userName;
-    }
-
     public String getPassWord()
     {
         return _passWord;
-    }
-
-    public void setPassWord(String passWord)
-    {
-        _passWord = passWord;
     }
 
     public boolean isAdmin()

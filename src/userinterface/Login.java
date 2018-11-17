@@ -81,7 +81,7 @@ public class Login extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
 private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-    dispose();
+    System.exit(0);
 }//GEN-LAST:event_exitButtonActionPerformed
 
 private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
@@ -101,11 +101,10 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
             return;
         }
         
-        UserManager um = new UserManager();
         try
         {
             String userName = userNameField.getText();
-            um.login(userName, String.valueOf(passWordField.getPassword()));
+            UserManager.getInstance().login(userName, String.valueOf(passWordField.getPassword()));
             new Subscription(userName).setVisible(true);
             setVisible(false);
         }

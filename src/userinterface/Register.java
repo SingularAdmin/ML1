@@ -1,7 +1,11 @@
 package userinterface;
 
 import javax.swing.JOptionPane;
+import user.UserManager;
 
+/**
+ * @author Fakou
+ */
 public class Register extends javax.swing.JFrame 
 {
     public Register()
@@ -150,10 +154,11 @@ public class Register extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
 private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-    dispose();
+    System.exit(0);
 }//GEN-LAST:event_exitButtonActionPerformed
 
 private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    String userName = userNameField.getText();
     if (userNameField.getText().isEmpty() || nameField.getText().isEmpty() || surNameField.getText().isEmpty() || idNumField.getText().isEmpty() || emailField.getText().isEmpty() || phoneNumField.getText().isEmpty())
     {
         JOptionPane.showMessageDialog(null, "Παρακαλώ συμπληρώστε όλα τα πεδία πρωτού πατήσετε το κουμπί Εγγραφή.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
@@ -164,13 +169,15 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
         JOptionPane.showMessageDialog(null, "Παρακαλώ επιλέξτε το φύλο σας πρωτού πατήσετε το κουμπί Εγγραφή.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
         return;
     }
-    if (passWordField.getPassword().length < 5)
+    char[] passWord = passWordField.getPassword();
+    if (passWord.length < 5)
     {
         JOptionPane.showMessageDialog(null, "Ο κωδικός δε μπορεί να είναι κάτω από 5 ψηφία.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
         return;
     }
     
-    new Login().setVisible(true);
+    UserManager.getInstance().register(userName, String.valueOf(passWord));
+    new Subscription(userName).setVisible(true);
     setVisible(false);
 }//GEN-LAST:event_registerButtonActionPerformed
 

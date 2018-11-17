@@ -22,10 +22,10 @@ public class Subscription extends javax.swing.JFrame
     public Subscription(String loggedInUsername)
     {
         initComponents();
-        initUI(loggedInUsername);
+        initUIandAddListeners(loggedInUsername);
     }
     
-    private void initUI(String loggedInUsername)
+    private void initUIandAddListeners(String loggedInUsername)
     {
         setTitle("Συνδρομή σε προγράμματα");
         welcomeLabel.setText(welcomeLabel.getText().replace("%userName%", loggedInUsername));
@@ -201,10 +201,16 @@ public class Subscription extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
+        if (_selectedCells.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Παρακαλώ επιλέξτε ένα απ'τα διαθέσιμα προγράμματα για να ολοκληρώσετε τη συνδρομή σας.", "Πρόβλημα κατά τη δήλωση προγραμμάτων.", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         JOptionPane.showMessageDialog(null, "not done yet", "unfinished", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_paymentButtonActionPerformed
     
