@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * @author DL, Fakou
@@ -42,9 +43,10 @@ public class UserManager
             rs.close();
             stmt.close();
         }
-        catch (SQLException ex)
+        catch (SQLException e)
         {
-            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Η σύνδεση με τη βάση δεδομένων δεν ήταν επιτυχής. Παρακαλώ επιβεβαιώστε ότι έχετε το MariaDB εγκαταστατημένο και υπάρχει ο πίνακας users.", "Πρόβλημα κατά τη Σύνδεση", JOptionPane.INFORMATION_MESSAGE);
+            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, e);
         }
         finally
         {
@@ -84,9 +86,10 @@ public class UserManager
             stmt.execute();
             stmt.close();
         }
-        catch (SQLException ex)
+        catch (SQLException e)
         {
-            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Η σύνδεση με τη βάση δεδομένων δεν ήταν επιτυχής. Παρακαλώ επιβεβαιώστε ότι έχετε το MariaDB εγκαταστατημένο και υπάρχει ο πίνακας users.", "Πρόβλημα κατά τη Σύνδεση", JOptionPane.INFORMATION_MESSAGE);
+            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, e);
         }
         finally
         {

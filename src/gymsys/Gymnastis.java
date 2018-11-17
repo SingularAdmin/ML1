@@ -2,8 +2,8 @@ package gymsys;
 
 public class Gymnastis
 {    
-    private String onoma;
-    private String eidikotita;
+    private String _onoma;
+    private String _eidikotita;
     
     public Gymnastis()
     {
@@ -11,19 +11,18 @@ public class Gymnastis
     
     public Gymnastis(String onoma, String eidikotita)
     {
-        this.onoma = onoma;
-        this.eidikotita = eidikotita;
+        _onoma = onoma;
+        _eidikotita = eidikotita;
     }
     
     public String getOnoma()
     {
-        return onoma;
+        return _onoma;
     }
-
+    
     @Override
     public String toString()
-    {    
-        String ektyp = ("\nONOMA: " + onoma + "  Ειδικότητα: " + eidikotita); 
-        return ektyp;
+    {
+        return "\nONOMA: " + _onoma + "  Ειδικότητα: " + _eidikotita;
     }
 }
