@@ -31,6 +31,9 @@ public class Subscription extends javax.swing.JFrame
         welcomeLabel.setText(welcomeLabel.getText().replace("%userName%", loggedInUsername));
         pack(); // To properly apply minimum/preferred size.
         
+        // Hide all card's objects.
+        hideCardObjects();
+        
         // Make the table transparent.
         scheduleTable.setOpaque(false);
         ((DefaultTableCellRenderer) scheduleTable.getDefaultRenderer(Object.class)).setOpaque(false);
@@ -55,6 +58,7 @@ public class Subscription extends javax.swing.JFrame
             }
         };
         
+        // Listen for the mouse click and manipulate the costResultLabel depending on how many cells are selected.
         MouseListener tableMouseListener = new MouseAdapter()
         {
             @Override
@@ -99,6 +103,15 @@ public class Subscription extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         paymentBox = new javax.swing.JComboBox<String>();
         infoLabel = new javax.swing.JLabel();
+        cardNumLabel = new javax.swing.JLabel();
+        cardExpirationLabel = new javax.swing.JLabel();
+        cardCvvLabel = new javax.swing.JLabel();
+        cardNameLabel = new javax.swing.JLabel();
+        cardNumField = new javax.swing.JTextField();
+        cardCvvField = new javax.swing.JTextField();
+        cardNameField = new javax.swing.JTextField();
+        cardExpMonthBox = new javax.swing.JComboBox();
+        cardExpYearBox = new javax.swing.JComboBox();
         backgroundImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -157,20 +170,23 @@ public class Subscription extends javax.swing.JFrame
         costLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         costLabel.setForeground(new java.awt.Color(255, 255, 255));
         costLabel.setText("Συνολικό κόστος:");
-        getContentPane().add(costLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, -1, -1));
+        getContentPane().add(costLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         costResultLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         costResultLabel.setForeground(new java.awt.Color(255, 255, 255));
         costResultLabel.setText("0€");
-        getContentPane().add(costResultLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, -1, -1));
+        getContentPane().add(costResultLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, -1, -1));
 
         paymentButton.setText("Πληρωμή");
+        paymentButton.setMaximumSize(new java.awt.Dimension(69, 23));
+        paymentButton.setMinimumSize(new java.awt.Dimension(69, 23));
+        paymentButton.setPreferredSize(new java.awt.Dimension(69, 23));
         paymentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 paymentButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(paymentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, -1, -1));
+        getContentPane().add(paymentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 390, 100, -1));
 
         exitButton.setText("Έξοδος");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -178,20 +194,54 @@ public class Subscription extends javax.swing.JFrame
                 exitButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, -1, -1));
+        getContentPane().add(exitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, 100, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Πληρωμή με:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
 
-        paymentBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Μετρητά", "Πιστωτική Κάρτα" }));
-        getContentPane().add(paymentBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, -1, -1));
+        paymentBox.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Μετρητά", "Κάρτα" }));
+        paymentBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentBoxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(paymentBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
 
         infoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         infoLabel.setForeground(new java.awt.Color(102, 255, 0));
         infoLabel.setText("Επιλέξτε πρόγραμμα πατώντας αριστερό κλικ. Για να επιλέξετε πάνω από ένα, κρατήστε το πλήκτρο CTRL ενώ διαλέγετε.");
         getContentPane().add(infoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 680, 20));
+
+        cardNumLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cardNumLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cardNumLabel.setText("Αριθμός Κάρτας:");
+        getContentPane().add(cardNumLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, -1, -1));
+
+        cardExpirationLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cardExpirationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cardExpirationLabel.setText("Ημερομηνία Λήξης:");
+        getContentPane().add(cardExpirationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, -1, -1));
+
+        cardCvvLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cardCvvLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cardCvvLabel.setText("CVV:");
+        getContentPane().add(cardCvvLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 330, -1, -1));
+
+        cardNameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cardNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cardNameLabel.setText("Όνομα στην Κάρτα:");
+        getContentPane().add(cardNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 240, -1, -1));
+        getContentPane().add(cardNumField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 270, 170, -1));
+        getContentPane().add(cardCvvField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 330, 40, -1));
+        getContentPane().add(cardNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 240, 170, -1));
+
+        cardExpMonthBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        getContentPane().add(cardExpMonthBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 300, 40, -1));
+
+        cardExpYearBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040" }));
+        getContentPane().add(cardExpYearBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 60, -1));
 
         backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/RegisterBackground.jpg"))); // NOI18N
         backgroundImage.setText("jLabel2");
@@ -210,12 +260,56 @@ public class Subscription extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null, "Παρακαλώ επιλέξτε ένα απ'τα διαθέσιμα προγράμματα για να ολοκληρώσετε τη συνδρομή σας.", "Πρόβλημα κατά τη δήλωση προγραμμάτων.", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        if (!paymentBox.getSelectedItem().equals("Μετρητά") && (cardNameField.getText().isEmpty() || cardNumField.getText().length() < 8 || cardCvvField.getText().length() < 3))
+        {
+            JOptionPane.showMessageDialog(null, "Παρακαλώ εισάγετε ορθά στοιχειά της κάρτας σας.", "Πρόβλημα κατά την πληρωμή.", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         JOptionPane.showMessageDialog(null, "not done yet", "unfinished", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_paymentButtonActionPerformed
+
+    private void paymentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBoxActionPerformed
+        if (!paymentBox.getSelectedItem().equals("Μετρητά"))
+        {
+            cardNameLabel.setVisible(true);
+            cardNumLabel.setVisible(true);
+            cardExpirationLabel.setVisible(true);
+            cardCvvLabel.setVisible(true);
+            cardNameField.setVisible(true);
+            cardNumField.setVisible(true);
+            cardExpMonthBox.setVisible(true);
+            cardExpYearBox.setVisible(true);
+            cardCvvField.setVisible(true);
+        }
+        else
+            hideCardObjects();
+    }//GEN-LAST:event_paymentBoxActionPerformed
+    
+    private void hideCardObjects()
+    {
+        cardNameLabel.setVisible(false);
+        cardNumLabel.setVisible(false);
+        cardExpirationLabel.setVisible(false);
+        cardCvvLabel.setVisible(false);
+        cardNameField.setVisible(false);
+        cardNumField.setVisible(false);
+        cardExpMonthBox.setVisible(false);
+        cardExpYearBox.setVisible(false);
+        cardCvvField.setVisible(false);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backgroundImage;
+    private javax.swing.JTextField cardCvvField;
+    private javax.swing.JLabel cardCvvLabel;
+    private javax.swing.JComboBox cardExpMonthBox;
+    private javax.swing.JComboBox cardExpYearBox;
+    private javax.swing.JLabel cardExpirationLabel;
+    private javax.swing.JTextField cardNameField;
+    private javax.swing.JLabel cardNameLabel;
+    private javax.swing.JTextField cardNumField;
+    private javax.swing.JLabel cardNumLabel;
     private javax.swing.JLabel costLabel;
     private javax.swing.JLabel costResultLabel;
     private javax.swing.JButton exitButton;

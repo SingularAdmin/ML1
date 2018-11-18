@@ -90,6 +90,7 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
 }//GEN-LAST:event_registerButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // Check if user inputted the required information.
         if (userNameField.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Το όνομα χρήστη δε μπορεί να είναι κενό.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
