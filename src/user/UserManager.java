@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class UserManager 
 {
-    private final String CONNECTION_QUERY = "jdbc:mariadb://localhost:3306/test?user=root&password=123";
+    private final String CONNECTION_QUERY = "jdbc:mariadb://localhost:3306/gym?user=root&password=123";
     private List<User> _users;
     
     public static final UserManager getInstance()
@@ -32,12 +32,12 @@ public class UserManager
         try
         {
             con = DriverManager.getConnection(CONNECTION_QUERY);     
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Users");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM users");
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next())
             {
-                _users.add(new User(rs.getString("Username"), rs.getString("Passwd")));
+                _users.add(new User(rs.getString("username"), rs.getString("password")));
             }
             
             rs.close();
@@ -62,27 +62,44 @@ public class UserManager
         }
     }
     
-    public User login(String userName, String passWord) throws IncorrectUserException
+    public User getUser(String userName)
     {
         for (User user : _users)
         {
-            if (user.getUserName().equals(userName) && user.getPassWord().equals(passWord))
+            if (user.getUserName().equals(userName))
                 return user;
         }
+        
+        return null;
+    }
+    
+    public User login(String userName, String passWord) throws IncorrectUserException
+    {
+        User user = getUser(userName);
+        if (user != null && user.getPassWord().equals(passWord))
+            return user;
         
         throw new IncorrectUserException("Τα στοιχεία που εισάγατε δεν είναι σωστά");
     }
     
-    public void register(String userName, String passWord)
+    public void register(String userName, String passWord, String name, String surName, String idNum, String dateOfBirth, String sex, long phoneNum, String email)
     {
         Connection con = null;
-        
         try
         {
             con = DriverManager.getConnection(CONNECTION_QUERY);     
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO Users (Username, Passwd) VALUES (?,?)");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, password, name, surname, id_num, date_of_birth, sex, phone_num, email) VALUES (?,?,?,?,?,?,?,?,?)");
+            
             stmt.setString(1, userName);
             stmt.setString(2, passWord);
+            stmt.setString(3, name);
+            stmt.setString(4, surName);
+            stmt.setString(5, idNum);
+            stmt.setString(6, dateOfBirth);
+            stmt.setString(7, sex);
+            stmt.setLong(8, phoneNum);
+            stmt.setString(9, email);
+            
             stmt.execute();
             stmt.close();
         }

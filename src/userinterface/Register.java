@@ -176,9 +176,15 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
         JOptionPane.showMessageDialog(null, "Ο κωδικός δε μπορεί να είναι κάτω από 5 ψηφία.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
         return;
     }
+    // Check if username is already used.
+    if (UserManager.getInstance().getUser(userName) != null)
+    {
+        JOptionPane.showMessageDialog(null, "Το όνομα χρήστη που εισάγατε υπάρχει ήδη.", "Πρόβλημα κατά την Εγγραφή", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
     
     // Register the user in the database and show the subscription UI.
-    UserManager.getInstance().register(userName, String.valueOf(passWord));
+    UserManager.getInstance().register(userName, String.valueOf(passWord), nameField.getText(), surNameField.getText(), idNumField.getText(), String.valueOf(dobDay.getSelectedItem()) + "/" + String.valueOf(dobMonth.getSelectedItem()) + "/" + String.valueOf(dobYear.getSelectedItem()), maleButton.isSelected() ? "male" : "female", Long.parseLong(phoneNumField.getText()), emailField.getText());
     new Subscription(userName).setVisible(true);
     setVisible(false);
 }//GEN-LAST:event_registerButtonActionPerformed

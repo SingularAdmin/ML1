@@ -265,8 +265,6 @@ public class Subscription extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null, "Παρακαλώ εισάγετε ορθά στοιχειά της κάρτας σας.", "Πρόβλημα κατά την πληρωμή.", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
-        JOptionPane.showMessageDialog(null, "not done yet", "unfinished", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_paymentButtonActionPerformed
 
     private void paymentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBoxActionPerformed
