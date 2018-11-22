@@ -102,6 +102,9 @@ public class UserManager
             
             stmt.execute();
             stmt.close();
+            
+            // Add user to our ArrayList.
+            _users.add(new User(userName, passWord));
         }
         catch (SQLException e)
         {

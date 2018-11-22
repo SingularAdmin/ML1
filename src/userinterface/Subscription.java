@@ -1,5 +1,7 @@
 package userinterface;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,12 +11,13 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * @author Fakou
  */
-public class Subscription extends javax.swing.JFrame 
+public class Subscription extends javax.swing.JFrame
 {
     private final List<String> _selectedCells = new ArrayList<String>();
     private boolean _pressingCTRL = false;
@@ -33,6 +36,20 @@ public class Subscription extends javax.swing.JFrame
         
         // Hide all card's objects.
         hideCardObjects();
+        
+        // Color the selected cells.
+        scheduleTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+        {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+            {
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setForeground(new Color(255, 255, 255));
+                if (isSelected || _selectedCells.contains(row + " " + column))
+                    setForeground(new Color(102, 255, 0));
+               return component;
+            }
+        });
         
         // Make the table transparent.
         scheduleTable.setOpaque(false);
@@ -68,6 +85,7 @@ public class Subscription extends javax.swing.JFrame
                 int col = scheduleTable.columnAtPoint(e.getPoint());
                 String newEntry =  row + " " + col;
                 
+                scheduleTable.setSelectionForeground(new Color(255, 255, 255));
                 if (_pressingCTRL)
                 {
                     if (_selectedCells.contains(newEntry))
