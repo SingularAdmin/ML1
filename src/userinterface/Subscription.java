@@ -21,6 +21,7 @@ public class Subscription extends javax.swing.JFrame
 {
     private final List<String> _selectedCells = new ArrayList<String>();
     private boolean _pressingCTRL = false;
+    private int _cost = 0;
     
     public Subscription(String loggedInUsername)
     {
@@ -44,9 +45,12 @@ public class Subscription extends javax.swing.JFrame
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
             {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                setForeground(new Color(255, 255, 255));
-                if (isSelected || _selectedCells.contains(row + " " + column))
+                setForeground(Color.WHITE);
+                
+                boolean containedInArray = _selectedCells.contains(row + " " + column);
+                if ((isSelected && containedInArray) || (containedInArray && _selectedCells.size() != 1))
                     setForeground(new Color(102, 255, 0));
+                
                return component;
             }
         });
@@ -82,25 +86,33 @@ public class Subscription extends javax.swing.JFrame
             public void mouseClicked(MouseEvent e)
             {
                 int row = scheduleTable.rowAtPoint(e.getPoint());
-                int col = scheduleTable.columnAtPoint(e.getPoint());
-                String newEntry =  row + " " + col;
+                int column = scheduleTable.columnAtPoint(e.getPoint());
+                String newEntry =  row + " " + column;
+                String program = scheduleTable.getModel().getValueAt(row, column).toString();
+                scheduleTable.setSelectionForeground(Color.WHITE); // Reset the color of the cells.
                 
-                scheduleTable.setSelectionForeground(new Color(255, 255, 255));
                 if (_pressingCTRL)
                 {
                     if (_selectedCells.contains(newEntry))
+                    {
                         _selectedCells.remove(newEntry);
+                        calculateCost(program, true);
+                    }
                     else
+                    {
                         _selectedCells.add(newEntry);
+                        calculateCost(program, false);
+                    }
                 }
                 else
                 {
                     _selectedCells.clear();
+                    _cost = 0;
                     _selectedCells.add(newEntry);
+                    calculateCost(program, false);
                 }
                 
-                // TODO: price calculation depending on selections. (atm it's static 5e for each program)
-                costResultLabel.setText(_selectedCells.size() * 5 + "€");
+                costResultLabel.setText(_cost + "€");
             }
         };
    
@@ -168,7 +180,6 @@ public class Subscription extends javax.swing.JFrame
             }
         });
         scheduleTable.setCellSelectionEnabled(true);
-        scheduleTable.setSelectionForeground(new java.awt.Color(102, 255, 0));
         scheduleTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scheduleTable.getTableHeader().setResizingAllowed(false);
         scheduleTable.getTableHeader().setReorderingAllowed(false);
@@ -283,6 +294,7 @@ public class Subscription extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null, "Παρακαλώ εισάγετε ορθά στοιχειά της κάρτας σας.", "Πρόβλημα κατά την πληρωμή.", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        
     }//GEN-LAST:event_paymentButtonActionPerformed
 
     private void paymentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBoxActionPerformed
@@ -313,6 +325,22 @@ public class Subscription extends javax.swing.JFrame
         cardExpMonthBox.setVisible(false);
         cardExpYearBox.setVisible(false);
         cardCvvField.setVisible(false);
+    }
+    
+    private void calculateCost(String program, boolean reduce)
+    {
+        int tempCost = 0;
+        if (program.contains("TRX") || program.contains("Πιλάτες"))
+            tempCost += 25;
+        else if (program.contains("Γιόγκα") || program.contains("Abs-Hips"))
+            tempCost += 20;
+        else
+            tempCost += 15;
+        
+        if (!reduce)
+            _cost += tempCost;
+        else
+            _cost -= tempCost;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
