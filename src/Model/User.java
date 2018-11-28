@@ -8,11 +8,13 @@ public class User
     private final String _userName;
     private final String _passWord;
     private boolean _admin = false;
-
-    public User(){
+    
+    public User()
+    {
         _userName = "";
         _passWord = "";
     }
+    
     public User(String userName, String passWord)
     {
         _userName = userName;

@@ -23,14 +23,16 @@ public class UISubscription extends javax.swing.JFrame
     private final List<String> _selectedCells = new ArrayList<String>();
     private boolean _pressingCTRL = false;
     private double _cost = 0;
-    private List<Subscription> Sub; 
+    private List<Subscription> Sub;
+    
     public UISubscription(String loggedInUsername)
     {
         initComponents();
         initUIandAddListeners(loggedInUsername);
     }
 
-    public UISubscription() {
+    public UISubscription()
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

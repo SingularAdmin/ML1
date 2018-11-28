@@ -1,89 +1,93 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DataManager;
 
 import ExceptionHandling.ExceptionHandler;
 import gymsys.Gymnastis;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import Model.User;
 
 /**
- *
  * @author DL
+ * UNUSED AT THE MOMENT
  */
-public class DBapi {
+public class DBapi
+{
     private final String CONNECTION_QUERY = "jdbc:mariadb://localhost:3306/gym?user=root&password=123";
-    private  Connection connection = null;
-    private  Statement stmt;
-    private  ResultSet resultset;
+    private Connection connection = null;
+    private Statement stmt;
+    private ResultSet resultset;
     private ExceptionHandler EH;
     private ResultSetMetaData resultsetmetadata;
-    public DBapi(){
-        try {
+    
+    public DBapi()
+    {
+        try
+        {
             connection = DriverManager.getConnection(CONNECTION_QUERY);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
            EH = new ExceptionHandler(ex);
         }
     }
     
-    public void getUserTable(){
+    public void getUserTable()
+    {
     }
     
-    public void insertUser(String Query){
-    
+    public void insertUser(String Query)
+    {
     }
     
-    public User getUser(String Username,String passwd){
-    User u = new User();
-    
-    return u;
+    public User getUser(String Username, String passwd)
+    {
+        User u = new User();
+        return u;
     }
     
-    public void deleteUser(String username){
+    public void deleteUser(String username)
+    {
     }
     
-    
-    public ArrayList<Gymnastis> getTrainers(String query){
+    public ArrayList<Gymnastis> getTrainers(String query)
+    {
         ArrayList<Gymnastis> gymnastes = new ArrayList();
-        try {
+        try
+        {
             stmt = connection.createStatement();
             stmt.executeQuery(query);
             resultset = stmt.getResultSet();
-            while(resultset.next()){
+            while (resultset.next())
+            {
                 gymnastes.add(new Gymnastis(resultset.getString("name"),resultset.getString("speciality")));
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             EH = new ExceptionHandler("gymnastes table sql error");
         }
         return gymnastes;
     }
     
-    
-    private ArrayList<Object> getUser(String query){
+    private ArrayList<Object> getUser(String query)
+    {
         ArrayList<Object> u = new ArrayList();
-       try {
+        try
+        {
             stmt = connection.createStatement();
             stmt.executeQuery(query);
             resultset = stmt.getResultSet();
-            
             resultsetmetadata = resultset.getMetaData();
             
-            
-            while(resultset.next()){
-                u.add(new Gymnastis(resultset.getString("name"),resultset.getString("speciality")));
+            while (resultset.next())
+            {
+                u.add(new Gymnastis(resultset.getString("name"), resultset.getString("speciality")));
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             EH = new ExceptionHandler("gymnastes table sql error");
         }
-       return u;
+        return u;
     }
 }
