@@ -1,5 +1,7 @@
-package user;
+package Controllers;
 
+import ExceptionHandling.IncorrectUserException;
+import Model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

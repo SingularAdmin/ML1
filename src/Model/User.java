@@ -1,4 +1,4 @@
-package user;
+package Model;
 
 /**
  * @author DL, Fakou
@@ -9,6 +9,10 @@ public class User
     private final String _passWord;
     private boolean _admin = false;
 
+    public User(){
+        _userName = "";
+        _passWord = "";
+    }
     public User(String userName, String passWord)
     {
         _userName = userName;

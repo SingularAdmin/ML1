@@ -1,7 +1,7 @@
-package userinterface;
+package View;
 
 import javax.swing.JOptionPane;
-import user.UserManager;
+import Controllers.UserManager;
 
 /**
  * @author Fakou
@@ -185,7 +185,7 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
     
     // Register the user in the database and show the subscription UI.
     UserManager.getInstance().register(userName, String.valueOf(passWord), nameField.getText(), surNameField.getText(), idNumField.getText(), String.valueOf(dobDay.getSelectedItem()) + "/" + String.valueOf(dobMonth.getSelectedItem()) + "/" + String.valueOf(dobYear.getSelectedItem()), maleButton.isSelected() ? "male" : "female", Long.parseLong(phoneNumField.getText()), emailField.getText());
-    new Subscription(userName).setVisible(true);
+    new UISubscription(userName).setVisible(true);
     setVisible(false);
 }//GEN-LAST:event_registerButtonActionPerformed
 

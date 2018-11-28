@@ -1,4 +1,4 @@
-package userinterface;
+package View;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,20 +13,25 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import Model.Subscription;
 
 /**
  * @author Fakou
  */
-public class Subscription extends javax.swing.JFrame
+public class UISubscription extends javax.swing.JFrame
 {
     private final List<String> _selectedCells = new ArrayList<String>();
     private boolean _pressingCTRL = false;
-    private int _cost = 0;
-    
-    public Subscription(String loggedInUsername)
+    private double _cost = 0;
+    private List<Subscription> Sub; 
+    public UISubscription(String loggedInUsername)
     {
         initComponents();
         initUIandAddListeners(loggedInUsername);
+    }
+
+    public UISubscription() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private void initUIandAddListeners(String loggedInUsername)
@@ -327,7 +332,7 @@ public class Subscription extends javax.swing.JFrame
         cardCvvField.setVisible(false);
     }
     
-    private void calculateCost(String program, boolean reduce)
+    private double calculateCost(String program, boolean reduce)
     {
         int tempCost = 0;
         if (program.contains("TRX") || program.contains("Πιλάτες"))
@@ -341,6 +346,7 @@ public class Subscription extends javax.swing.JFrame
             _cost += tempCost;
         else
             _cost -= tempCost;
+        return tempCost;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

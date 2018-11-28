@@ -1,7 +1,7 @@
-package userinterface;
+package View;
 
-import user.IncorrectUserException;
-import user.UserManager;
+import ExceptionHandling.IncorrectUserException;
+import Controllers.UserManager;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -106,7 +106,7 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
         {
             String userName = userNameField.getText();
             UserManager.getInstance().login(userName, String.valueOf(passWordField.getPassword()));
-            new Subscription(userName).setVisible(true);
+            new UISubscription(userName).setVisible(true);
             setVisible(false);
         }
         catch (IncorrectUserException e)

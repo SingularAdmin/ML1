@@ -10,6 +10,7 @@ public class Gymnastirio
     
     public Gymnastirio()
     {
+       
     }
     
     public Gymnastirio(String onoma, String eidikotita)
@@ -31,5 +32,13 @@ public class Gymnastirio
     public ArrayList<Gymnastis> getGymnastes()
     {
         return gymnastes;
+    }
+    public void setGymnastes(ArrayList<Gymnastis>  gymnastes){
+        this.gymnastes = gymnastes;
+    }
+    
+    public void print(){
+         for (Gymnastis gymn : gymnastes)  
+            System.out.println(gymn.toString()); 
     }
 }
