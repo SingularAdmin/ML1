@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author DL
@@ -12,8 +12,12 @@ public class Subscription
     private String description;
     private float SubLength;
     
-    Subscription(){}
-
+    public Subscription(){
+        Cost = 0;
+        SubDateTime = new Date();
+        description = "text.. ";
+        SubLength = 0;
+    }
     public Subscription(double Cost, Date SubDateTime, String description, float SubLength) {
         this.Cost = Cost;
         this.SubDateTime = SubDateTime;
@@ -51,6 +55,11 @@ public class Subscription
 
     public void setSubLength(float SubLength) {
         this.SubLength = SubLength;
+    }
+
+    @Override
+    public String toString() {
+        return "Subscription{" + "Cost=" + Cost + ", SubDateTime=" + SubDateTime + ", description=" + description + ", SubLength=" + SubLength + '}';
     }
     
     

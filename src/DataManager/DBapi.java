@@ -38,13 +38,13 @@ public class DBapi
     public void insertUser(String Query)
     {
     }
-    
+    /*
     public User getUser(String Username, String passwd)
     {
         User u = new User();
         return u;
     }
-    
+    */
     public void deleteUser(String username)
     {
     }

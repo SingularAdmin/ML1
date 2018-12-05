@@ -1,5 +1,6 @@
 package View;
 
+import Controllers.CSubscription;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import Model.Subscription;
+import Model.User;
 
 /**
  * @author Fakou
@@ -23,23 +25,24 @@ public class UISubscription extends javax.swing.JFrame
     private final List<String> _selectedCells = new ArrayList<String>();
     private boolean _pressingCTRL = false;
     private double _cost = 0;
-    private List<Subscription> Sub;
+    private User u;
     
-    public UISubscription(String loggedInUsername)
+    public UISubscription(User u)
     {
+        this.u = u; 
         initComponents();
-        initUIandAddListeners(loggedInUsername);
+        initUIandAddListeners(u);
     }
-
+  
     public UISubscription()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     
-    private void initUIandAddListeners(String loggedInUsername)
+    private void initUIandAddListeners(User u)
     {
         setTitle("Συνδρομή σε προγράμματα");
-        welcomeLabel.setText(welcomeLabel.getText().replace("%userName%", loggedInUsername));
+        welcomeLabel.setText(welcomeLabel.getText().replace("%userName%", u.getUserName()));
         pack(); // To properly apply minimum/preferred size.
         
         // Hide all card's objects.
@@ -302,6 +305,12 @@ public class UISubscription extends javax.swing.JFrame
             return;
         }
         
+        CSubscription c = new CSubscription();
+        c.newSubscription(u,_cost);
+        
+        
+        
+        
     }//GEN-LAST:event_paymentButtonActionPerformed
 
     private void paymentBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBoxActionPerformed
@@ -334,7 +343,7 @@ public class UISubscription extends javax.swing.JFrame
         cardCvvField.setVisible(false);
     }
     
-    private double calculateCost(String program, boolean reduce)
+    private void calculateCost(String program, boolean reduce)
     {
         int tempCost = 0;
         if (program.contains("TRX") || program.contains("Πιλάτες"))
@@ -348,9 +357,9 @@ public class UISubscription extends javax.swing.JFrame
             _cost += tempCost;
         else
             _cost -= tempCost;
-        return tempCost;
     }
     
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backgroundImage;
     private javax.swing.JTextField cardCvvField;

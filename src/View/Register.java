@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.JOptionPane;
 import Controllers.UserManager;
+import Model.User;
 
 /**
  * @author Fakou
@@ -185,7 +186,8 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
     
     // Register the user in the database and show the subscription UI.
     UserManager.getInstance().register(userName, String.valueOf(passWord), nameField.getText(), surNameField.getText(), idNumField.getText(), String.valueOf(dobDay.getSelectedItem()) + "/" + String.valueOf(dobMonth.getSelectedItem()) + "/" + String.valueOf(dobYear.getSelectedItem()), maleButton.isSelected() ? "male" : "female", Long.parseLong(phoneNumField.getText()), emailField.getText());
-    new UISubscription(userName).setVisible(true);
+    User u = UserManager.getInstance().getUser(userName);
+    new UISubscription(u).setVisible(true);
     setVisible(false);
 }//GEN-LAST:event_registerButtonActionPerformed
 

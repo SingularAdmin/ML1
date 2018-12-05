@@ -2,6 +2,7 @@ package View;
 
 import ExceptionHandling.IncorrectUserException;
 import Controllers.UserManager;
+import Model.User;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -105,8 +106,8 @@ private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GE
         try
         {
             String userName = userNameField.getText();
-            UserManager.getInstance().login(userName, String.valueOf(passWordField.getPassword()));
-            new UISubscription(userName).setVisible(true);
+            User u = UserManager.getInstance().login(userName, String.valueOf(passWordField.getPassword()));
+            new UISubscription(u).setVisible(true);
             setVisible(false);
         }
         catch (IncorrectUserException e)
